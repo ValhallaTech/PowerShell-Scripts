@@ -1,0 +1,3 @@
+@ECHO off
+ECHO Running PowerShell script, Remove-Webcache.ps1 with Execution Policy set to bypass ...
+powershell.exe -executionpolicy bypass -noninteractive -nologo -file ".\Remove-WebCache.ps1"

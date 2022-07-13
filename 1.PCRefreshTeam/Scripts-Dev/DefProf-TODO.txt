@@ -1,0 +1,3 @@
+Please complete the following on the ramadmin account: Remove Edge from the task bar and add the Self Service client, Chrome, Firefox, and Outlook. Please change the default PDF reader to Adobe Reader, the Default browser to Chrome, and the Default mail client to outlook
+
+dism /online /Export-DefaultAppAssociations:"%UserProfile%\Data\MyDefaultAppAssociations.xml"
