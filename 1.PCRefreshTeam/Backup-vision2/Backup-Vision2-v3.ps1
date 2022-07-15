@@ -1,7 +1,17 @@
+$userProfile = $env:USERPROFILE
 $usrLoggedon = Get-Process -IncludeUserName | Select-Object -Property username -Unique | Where-Object { $_ -match "WSSUMITS" }
 $usrString = $usrLoggedon.UserName.Replace("WSSUMITS\","")
 $modRobocopy = "RobocopyPS"
 $checkRobocopy = Get-Module -Name $modRobocopy
+$paramRobo = @{
+    Source = $userProfile
+    Destination = "\\vision2\backups\$usrString"
+    Force = $true
+    Threads = 16
+    Retry = 0
+    Recurse = $true
+    Verbose = $true
+}
 
 # Installing and importing RobocopyPS module
 if (-Not $checkRobocopy) {
@@ -19,4 +29,4 @@ Write-Host ""
 Write-Host ""
 Write-Host "Executing Robocopy command"
 Write-Host ""
-Invoke-RoboCopy -Source "C:\Users\$usrString" -Destination "\\vision2\backups\$usrString" -Force -ExcludeFileName *.DAT*,*.dll* -ExcludeDirectory *OneDrive*,*AppData*,*Application* -DirectoryCopyFlags D,A,T -Threads 16 -Retry 0 -Verbose
+Invoke-RoboCopy @paramRobo -DirectoryCopyFlags D,A,T -ExcludeFileName *.DAT*,*.dll* -ExcludeDirectory *OneDrive*,*AppData*,*Application*

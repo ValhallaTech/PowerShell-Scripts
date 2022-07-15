@@ -19,4 +19,4 @@ Write-Host ""
 Write-Host ""
 Write-Host "Executing Robocopy command"
 Write-Host ""
-Invoke-RoboCopy -Source "C:\Users\$usrString" -Destination "\\vision2\backups\$usrString" -Force -ExcludeFileName *.DAT*,*.dll* -ExcludeDirectory *OneDrive*,*AppData*,*Application* -DirectoryCopyFlags D,A,T -Threads 16 -Retry 0 -Verbose
+Invoke-RoboCopy -Source "\\vision2\backups\$usrString" -Destination "C:\Users\$usrString" -Force -ExcludeFileName *.DAT*,*.dll* -ExcludeDirectory *OneDrive*,*AppData*,*Application* -DirectoryCopyFlags D,A,T -Threads 16 -Retry 0 -Recurse -Verbose
