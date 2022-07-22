@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LayoutModificationTemplate
+  xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"
+  xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout"
+  xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout"
+  xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout"
+  Version="1">
+  <LayoutOptions StartTileGroupCellWidth="6" />
+  <DefaultLayoutOverride>
+    <StartLayoutCollection>
+      <defaultlayout:StartLayout
+        GroupCellWidth="6"
+        xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout">
+        <start:Group
+          Name="Productivity"
+          xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout">
+          <start:DesktopApplicationTile
+            Size="2x2"
+            Column="0"
+            Row="0"
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Self Service Client.lnk" />
+          <start:DesktopApplicationTile
+            Size="2x2"
+            Column="1"
+            Row="0"
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Programs\Firefox.lnk" />
+          <start:DesktopApplicationTile
+            Size="2x2"
+            Column="2"
+            Row="0"
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Programs\Google Chrome.lnk" />
+          <start:DesktopApplicationTile
+            Size="2x2"
+            Column="3"
+            Row="0"
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
+        </start:Group>
+      </defaultlayout:StartLayout>
+    </StartLayoutCollection>
+  </DefaultLayoutOverride>
+    <CustomTaskbarLayoutCollection>
+      <defaultlayout:TaskbarLayout>
+        <taskbar:TaskbarPinList>
+        <taskbar:DesktopApp
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Self Service Client.lnk" />
+        <taskbar:DesktopApp
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Programs\Firefox.lnk" />
+        <taskbar:DesktopApp
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Programs\Google Chrome.lnk" />
+        <taskbar:DesktopApp
+            DesktopApplicationLinkPath="$ALLUSERSPROFILE$\Microsoft\Windows\Start Menu\Programs\Outlook.lnk" />
+      </taskbar:TaskbarPinList>
+    </defaultlayout:TaskbarLayout>
+  </CustomTaskbarLayoutCollection>
+</LayoutModificationTemplate>

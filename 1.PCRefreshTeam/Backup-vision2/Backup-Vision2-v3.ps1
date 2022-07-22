@@ -1,10 +1,9 @@
-$userProfile = $env:USERPROFILE
 $usrLoggedon = Get-Process -IncludeUserName | Select-Object -Property username -Unique | Where-Object { $_ -match "WSSUMITS" }
 $usrString = $usrLoggedon.UserName.Replace("WSSUMITS\","")
 $modRobocopy = "RobocopyPS"
 $checkRobocopy = Get-Module -Name $modRobocopy
 $paramRobo = @{
-    Source = $userProfile
+    Source = "C:\Users\$usrString"
     Destination = "\\vision2\backups\$usrString"
     Force = $true
     Threads = 16
