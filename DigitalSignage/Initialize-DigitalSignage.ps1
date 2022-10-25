@@ -1,8 +1,12 @@
 # General variables
-$computerName = HOSTNAME.EXE
-$adminUSR = "DSAdmin01"
-$adminPWD = "InitPass1"
+$systemDrive = $env:SystemDrive
+$hostName = HOSTNAME.EXE
+$localAdmin = "ramadmin"
 $procExplorer = Get-Process "explorer"
+$autologonPath = ".\autologon64.exe"
+#Autologon.exe variables
+$domain = $hostName
+$password = Read-Host -Prompt "Enter password for local admin" -AsSecureString
 
 # Registry path names
 $macLockScreenPath = "HKLM:Software\Policies\Microsoft\Windows\Personalization"
@@ -20,11 +24,6 @@ $lockScreenOverlaysdisabled = "LockscreenOverylaysDisabled"
 $poldisablecad = "disablecad"
 $poLLegalNoticeText = "LegalNoticeText"
 $polLegalNoticeCaption = "LegalNoticeCaption"
-$polAutoAdminLogon = "AutoAdminLogon"
-$polDefaultUserName = "DefaultUserName"
-$polDefaultPassword = "DefaultPassword"
-$polDefaultDomainName = "DefaultDomainName"
-$polForceAutoLogon = "ForceAutoLogon"
 $polHideIcons = "HideIcons"
 
 Write-Host ""
@@ -57,12 +56,8 @@ Set-ItemProperty -Path $usrDesktopIcons -Name $polHideIcons -Value "1"
 # Cycle explorer
 Stop-Process $procExplorer
 
-# Autologon initialization
+# Utilize Autologon app
 Set-ItemProperty -Path $macRegPoliciesPath -Name $poldisablecad -Value "1"
 Remove-ItemProperty -Path $macRegPoliciesPath -Name $polLegalNoticeText
 Remove-ItemProperty -Path $macRegPoliciesPath -Name $polLegalNoticeCaption
-Set-ItemProperty -Path $macRegWinlogonPath -Name $polAutoAdminLogon -Value "1"
-Set-ItemProperty -Path $macRegWinlogonPath -Name $polDefaultUserName -Value "$adminUSR"
-Set-ItemProperty -Path $macRegWinlogonPath -Name $polDefaultPassword -Value "$adminPWD"
-Set-ItemProperty -Path $macRegWinlogonPath -Name $polDefaultDomainName -Value "$computerName"
-New-ItemProperty -Path $macRegWinlogonPath -Name $polForceAutoLogon -PropertyType DWord -Value "1"
+.\Autologon64.exe /accepteula ramadmin THOMDS-FYZ9RN3 C@mpusAdmin21$ 
