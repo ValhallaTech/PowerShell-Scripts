@@ -16,16 +16,16 @@ $paramRobo = @{
 if (-Not $checkRobocopy) {
     Install-Module -Name $modRobocopy
 }
-Write-Host ""
-Write-Host "RobocopyPS is installed"
-Write-Host ""
+Write-Output ""
+Write-Output "RobocopyPS is installed"
+Write-Output ""
 Import-Module -Name $modRobocopy
-Write-Host ""
-Write-Host "RobocopyPS is imported to this session"
-Write-Host ""
+Write-Output ""
+Write-Output "RobocopyPS is imported to this session"
+Write-Output ""
 
 #Invoke-RoboCopy will wrap the RoboCopy command in PowerShell syntax
-Write-Host ""
-Write-Host "Executing Robocopy command"
-Write-Host ""
+Write-Output ""
+Write-Output "Executing Robocopy command"
+Write-Output ""
 Invoke-RoboCopy @paramRobo -DirectoryCopyFlags D,A,T -ExcludeFileName *.DAT*,*.dll* -ExcludeDirectory *OneDrive*,*AppData*,*Application*
