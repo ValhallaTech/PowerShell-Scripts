@@ -1,12 +1,6 @@
 # General variables
 $systemDrive = $env:SystemDrive
-$hostName = HOSTNAME.EXE
-$localAdmin = "ramadmin"
 $procExplorer = Get-Process "explorer"
-$autologonPath = ".\autologon64.exe"
-#Autologon.exe variables
-$domain = $hostName
-$password = Read-Host -Prompt "Enter password for local admin" -AsSecureString
 
 # Registry path names
 $macLockScreenPath = "HKLM:Software\Policies\Microsoft\Windows\Personalization"
@@ -60,4 +54,4 @@ Stop-Process $procExplorer
 Set-ItemProperty -Path $macRegPoliciesPath -Name $poldisablecad -Value "1"
 Remove-ItemProperty -Path $macRegPoliciesPath -Name $polLegalNoticeText
 Remove-ItemProperty -Path $macRegPoliciesPath -Name $polLegalNoticeCaption
-.\Autologon64.exe /accepteula ramadmin THOMDS-FYZ9RN3 C@mpusAdmin21$ 
+.\Autologon64.exe mmts
