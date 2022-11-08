@@ -54,4 +54,4 @@ Stop-Process $procExplorer
 Set-ItemProperty -Path $macRegPoliciesPath -Name $poldisablecad -Value "1"
 Remove-ItemProperty -Path $macRegPoliciesPath -Name $polLegalNoticeText
 Remove-ItemProperty -Path $macRegPoliciesPath -Name $polLegalNoticeCaption
-.\Autologon64.exe mmts
+.\Autologon64.exe
