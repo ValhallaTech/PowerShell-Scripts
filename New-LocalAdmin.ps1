@@ -1,6 +1,7 @@
+$user = Read-Host "Enter username"
 $password = Read-Host "Enter new password" -AsSecureString
-Write-Host "Creating DSAdmin01 user account ..."
-New-LocalUser "DSAdmin01" -Password $password -FullName "DSAdmin01" -Description "DSAdmin01" -Verbose
+Write-Host "Creating $user account ..."
+New-LocalUser "$user" -Password $password -FullName "$user" -Description "$user" -Verbose
 
-Write-Host "Adding DSAdmin01 to Local Administrators group ..."
-Add-LocalGroupMember -Group "Administrators" -Member "DSAdmin01" -Verbose
+# Write-Host "Adding $user to Local Administrators group ..."
+# Add-LocalGroupMember -Group "Administrators" -Member "$user" -Verbose
