@@ -28,7 +28,7 @@ else {
     Write-Host "***" "" "BIOS Configuration: Secure boot is off" "" "***"
 }
 
-# Check parameters to determine if the .exe needs to run to re-configure the BIOS
+# Check parameters to determine if the .exe needs to run to re-configure the BIOS and which configuration needs to run based on chassis type
 if ($chassisType -eq "Laptop" -AND $statusSecureBoot -eq $false ) {
     $pathLaptopBIOSExe
 }
