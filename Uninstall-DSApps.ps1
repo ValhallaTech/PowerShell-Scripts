@@ -1,9 +1,12 @@
+#App variables
 $appDuoAuth = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Duo Authentication for Windows Logon x64"}
 $appMSUpdateHealthTools = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Microsoft Update Health Tools"}
 $appZoom = Get-Package -Provider Programs | Where-Object{$_.Name -eq "Zoom"}
 $appFirefox = Get-Package -Provider Programs | Where-Object{$_.name -eq "Mozilla Firefox (x64 en-US)"}
 $appOneDrive = Get-Package -Provider Programs | Where-Object{$_.Name -eq "Microsoft OneDrive"}
 $appNotepadplusplus = Get-Package -Provider Programs | Where-Object{$_.Name -eq "Notepad++ (64-bit x64)"}
+
+# App arrays
 $arrWmiApps = @($appDuoAuth,$appMSUpdateHealthTools)
 $arrPackageApps = @($appZoom,$appFirefox,$appOneDrive,$appNotepadplusplus)
 
