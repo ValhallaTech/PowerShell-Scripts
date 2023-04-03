@@ -1,25 +1,19 @@
-# Grouper Mapper 2.0.0
+$systemDrive = $env:SystemDrive
+$logPath = "$systemDrive\Logs\DriverMapper.log"
 
-# Check if PoShLog module is installed and if not install the current version
-if (-not $chkPoShLog) {
-    Install-Module -Name $modPoShLog
-}
-    Write-Log -Logger $logger -Message "PoShLog module installed"
-else {
-    Write-Log -Logger $logger -Message "PoShLog module already installed"
-}
-    # Import PoShLog module
-Import-Module -Name $modPoShLog
-    Write-Log -Logger $logger -Message "PoShLog module imported"
-
-# Map group drive using these parameters
-$paramMapping = @{
-  Name = "G"
-  PSProvider = "FileSystem"
-  Root = "\\wssufs2\ramfile\groups"
-  Persist = $true
-  Credential = (Get-Credential)
+# Splatting Variables
+$driveParams = @{
+    Name = "G"
+    PSProvider = "FileSystem"
+    Root = "\\wssu.edu\ramfile\groups"
+    Persist = $true
 }
 
-# Map group drive using the specified parameters
-New-PSDrive @paramMapping
+try {
+    # Map group drive
+    New-PSDrive @driveParams -ErrorAction Stop
+    Write-Output "Mapped group drive successfully." > $logPath
+}
+catch {
+    Write-Error "Failed to map group drive: $_" > $logPath -ErrorAction Stop
+}
