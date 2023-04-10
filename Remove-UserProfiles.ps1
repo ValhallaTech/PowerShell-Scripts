@@ -27,7 +27,7 @@
 # Function to check if WinRM service is running and configured
 function Invoke-WinRM {
     $winrmService = Get-Service -Name WinRM
-    $winrmCommand = cmd.exe /c "$WinRM quickconfig -quiet"
+    $winrmCommand = cmd.exe /c $WinRM quickconfig
     if ($winrmService.Status -ne "Running") {
         Write-Host "WinRM service is not running. Configuring..."
         try {
