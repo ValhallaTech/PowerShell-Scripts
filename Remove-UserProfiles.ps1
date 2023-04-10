@@ -1,4 +1,27 @@
-# User Profile Sweeper 1.0.2
+<#
+.SYNOPSIS
+    Deletes user profiles on a computer, excluding specified accounts.
+
+.DESCRIPTION
+    This script deletes all user profiles on a computer except those listed in the $acctsExcluded variable. 
+    It checks if the WinRM service is running and configures it if necessary.
+
+.PARAMETER acctsExcluded
+    An array of account names (usernames or SIDs) that should be excluded from the removal process. This includes ramadmin and built-in accounts.
+
+.PARAMETER Invoke-WinRM
+    A function that will check if the WinRM service is running and if it is not, it will configure and start the service. This service is required for the script to work.
+
+.EXAMPLE
+    .\Remove-UserProfiles.ps1
+
+.NOTES
+    Version: 1.1.2
+    Author: Fred Smith
+    Creation Date: 04/10/2023
+    Additional notes: Make sure you run the script in an elevated PowerShell session.
+.
+#>
 
 # Function to check if WinRM service is running and configured
 function Invoke-WinRM {
