@@ -17,6 +17,8 @@ function Invoke-WinRM {
     }
 }
 
+Invoke-WinRM
+
 # Variables that create an array of the accounts to be excluded from removal process
 $acctsExcluded = @("ramadmin", "S-1-5-18", "S-1-5-19", "S-1-5-20")
 
