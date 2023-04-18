@@ -26,20 +26,6 @@ $logger |
 
 Write-InfoLog "PoShLog module imported and logger configured"
 
-# Variables for PSThreadJob checking
-$modPSThreadJob = "PSThreadJob"
-$chkPSThreadJob = Get-Module -Name $modPSThreadJob
-
-# Check if PSThreadJob module is installed and if not install the current version
-if (-not $chkPSThreadJob) {
-    Install-Module -Name $modPSThreadJob
-}
-
-# Import PSThreadJob module
-Import-Module -Name $modPSThreadJob
-
-Write-InfoLog "PSThreadJob module imported"
-
 function Get-InstalledSoftware {
     <#
     .SYNOPSIS
