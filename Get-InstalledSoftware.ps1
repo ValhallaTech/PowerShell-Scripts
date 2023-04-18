@@ -83,3 +83,5 @@ function Get-InstalledSoftware {
         return $results
     }
 }
+
+Get-InstalledSoftware
