@@ -26,6 +26,29 @@ $logger |
 
 Write-InfoLog "PoShLog module imported and logger configured"
 
+# Variables for PSParallel checking
+$modPSParallel = "PSParallel"
+$chkPSParallel = Get-Module -Name $modPSParallel
+
+# Check if PSParallel module is installed and if not install the current version
+if (-not $chkPSParallel) {
+    try {
+        Install-Module -Name $modPSParallel -ErrorAction Stop
+    } catch {
+        Write-ErrorLog "Failed to install PSParallel module: $_"
+        exit 1
+    }
+}
+
+# Import PSParallel module
+try {
+    Import-Module -Name $modPSParallel -ErrorAction Stop
+} catch {
+    Write-ErrorLog "Failed to import PSParallel module: $_"
+    exit 1
+}
+
+Write-InfoLog "PSParallel module imported"
 function Get-InstalledSoftware {
     <#
     .SYNOPSIS
@@ -52,12 +75,12 @@ function Get-InstalledSoftware {
     )
     $uninstallKeys = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
     $null = New-PSDrive -Name HKU -PSProvider Registry -Root Registry::HKEY_USERS
-    $uninstallKeys += Get-ChildItem HKU: -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'S-\d-\d+-(\d+-){1,14}\d+$' } | ForEach-Object -Parallel -ThrottleLimit 8 { "HKU:\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall" }
+    $uninstallKeys += Get-ChildItem HKU: -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'S-\d-\d+-(\d+-){1,14}\d+$' } | Invoke-Parallel -ThrottleLimit 8 -ScriptBlock { "HKU:\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall" }
 
     if (-not $uninstallKeys) {
         Write-InfoLog -Message 'No software registry keys found'
     } else {
-        $results = $uninstallKeys | ForEach-Object -Parallel -ThrottleLimit 8 {
+        $results = $uninstallKeys | Invoke-Parallel -ThrottleLimit 8 -ScriptBlock {
             $uninstallKey = $_
             if ($Using:Name) {
                 $whereBlock = { ($_.PSChildName -match '^{[A-Z0-9]{8}-([A-Z0-9]{4}-){3}[A-Z0-9]{12}}$') -and ($_.GetValue('DisplayName') -like "$Using:Name*") }
@@ -76,7 +99,7 @@ function Get-InstalledSoftware {
         }
 
         Write-InfoLog "Get-InstalledSoftware - List of software found:"
-        $results | ForEach-Object -Parallel -ThrottleLimit 8 {
+        $results | Invoke-Parallel -ThrottleLimit 8 -ScriptBlock {
             Write-InfoLog "Name: $($_.Name) - GUID: $($_.GUID)"
         }
 
