@@ -25,14 +25,12 @@ try {
     manage-bde.exe -protectors -get $systemDrive
 
     # Log a success message
-    Write-Log -Message "BitLocker TPM key protector was successfully added." -LogLevel Info
+    Write-InfoLog "BitLocker TPM key protector was successfully added."
 }
 catch {
     # Log the error message and write it to the console
-    Write-Log -Message "Error adding BitLocker TPM key protector: $_" -LogLevel Error
-    Write-Error $_
+    Write-ErrorLog "Error adding BitLocker TPM key protector: $_"
 }
 finally {
-    # Save the log file
-    Save-LogFile
+    Close-Logger
 }
