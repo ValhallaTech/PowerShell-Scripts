@@ -10,7 +10,7 @@
     .\Remove-UserProfiles.ps1
 
 .NOTES
-    Version: 1.2.2
+    Version: 1.2.4
     Author: Fred Smith
     Creation Date: 04/10/2023
 
@@ -24,12 +24,18 @@
     Make sure you run the script in an elevated PowerShell session.
 #>
 
+# Install Nuget Provider, if not already installed
+Install-PackageProvider -Name "NuGet" -ForceBootstrap
+
+# Set PSGallery as a trusted repository
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
 $modPoShLog = "PoShLog"
 $chkPoShLog = Get-Module -Name $modPoShLog
 
 # Check if PoShLog module is installed and if not install the current version
 if (-not $chkPoShLog) {
-    Install-Module -Name $modPoShLog
+    Install-Module -Name $modPoShLog -Force
 }
 
 # Import PoShLog module
