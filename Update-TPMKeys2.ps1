@@ -1,13 +1,36 @@
-# Import the PoShLog module
-Import-Module PoShLog
+# Check if PoShLog module is installed and if not install the current version
+$modPoShLog = "PoShLog"
+$chkPoShLog = Get-InstalledModule -Name $modPoShLog -ErrorAction SilentlyContinue
 
-# Set up logging configuration
-$logFile = "$env:SystemDrive\Temp\BitLocker.log"
-$logConfig = New-LogConfig -LogFilePath $logFile -MinimumLogLevel Info
-Set-LogConfig $logConfig
+# Install Nuget Provider, if not already installed
+Install-PackageProvider -Name "NuGet" -ForceBootstrap
 
-# General Variables
+# Set PSGallery as a trusted repository
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+if (-not $chkPoShLog) {
+    Install-Module -Name $modPoShLog
+}
+
+# Import PoShLog module
+Import-Module -Name $modPoShLog
+
+# Configure variables for logging
 $systemDrive = $env:SystemDrive
+$logFileName = "Update-TPMKeys.log"
+$logFilePath = "$systemDrive\Logs\$logFileName"
+
+# Create logger instance
+$logger = New-Logger
+
+# Configure logger instance
+$logger |
+    Set-MinimumLevel -Value Information |
+    Add-SinkFile -Path $logFilePath |
+    Add-SinkConsole |
+    Start-Logger
+
+Write-InfoLog "PoShLog module imported and logger configured"
 
 try {
     # Get the BitLocker volume for the operating system partition and find the ID of the TPM key protector
