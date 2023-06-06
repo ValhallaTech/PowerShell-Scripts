@@ -4,6 +4,12 @@
 $usrLoggedon = Get-Process -IncludeUserName | Select-Object -Property username -Unique | Where-Object { $_ -match "WSSUMITS" }
 $usrString = $usrLoggedon.UserName.Replace("WSSUMITS\","")
 
+# Install Nuget Provider, if not already installed
+Install-PackageProvider -Name "NuGet" -ForceBootstrap
+
+# Set PSGallery as a trusted repository
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
 # Variables for RobocopyPS and PoShLog
 $modRobocopy = "RobocopyPS"
 $chkRobocopy = Get-Module -Name $modRobocopy
@@ -66,4 +72,5 @@ try {
 } catch {
     # Log any errors that occur
     Write-ErrorLog -Logger $Log -Level Error -Message $_.Exception.Message
+    Close-Logger
 }
