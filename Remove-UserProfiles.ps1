@@ -61,7 +61,7 @@ Write-InfoLog "PoShLog module imported and logger configured"
 function Invoke-WinRM {
     Write-InfoLog "Checking if WinRM service is running and configured"
     $winrmService = Get-Service -Name WinRM
-    $winrmCommand = cmd.exe /c $WinRM quickconfig
+    $winrmCommand = Set-WSManQuickConfig -Force
     if ($winrmService.Status -ne "Running") {
         Write-InfoLog "WinRM service is not running. Configuring..."
         try {
