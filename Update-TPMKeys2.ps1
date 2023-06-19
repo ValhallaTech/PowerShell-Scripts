@@ -3,7 +3,7 @@ $modPoShLog = "PoShLog"
 $chkPoShLog = Get-InstalledModule -Name $modPoShLog -ErrorAction SilentlyContinue
 
 # Install Nuget Provider, if not already installed
-Install-PackageProvider -Name "NuGet" -ForceBootstrap
+Install-PackageProvider -Name "NuGet" -Force
 
 # Set PSGallery as a trusted repository
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
