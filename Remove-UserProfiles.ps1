@@ -25,17 +25,17 @@
 #>
 
 # Install Nuget Provider, if not already installed
-Install-PackageProvider -Name "NuGet" -ForceBootstrap
+Install-PackageProvider -Name "NuGet" -Force
 
 # Set PSGallery as a trusted repository
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
 
 $modPoShLog = "PoShLog"
 $chkPoShLog = Get-Module -Name $modPoShLog
 
 # Check if PoShLog module is installed and if not install the current version
 if (-not $chkPoShLog) {
-    Install-Module -Name $modPoShLog -Force
+    Install-Module -Name $modPoShLog -Repository "PSGallery" -Confirm:$false -Force
 }
 
 # Import PoShLog module
