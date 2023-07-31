@@ -1,0 +1,1 @@
+choco install Temurin8 --params="/both /ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome,FeatureIcedTeaWeb /INSTALLDIR=$env:Programfiles\Eclipse Adoptium\"
