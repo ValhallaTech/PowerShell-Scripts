@@ -1,3 +1,9 @@
+# Install Nuget Provider, if not already installed
+Install-PackageProvider -Name "NuGet" -Force
+
+# Set PSGallery as a trusted repository
+Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+
 # Variables for PoShLog checking
 $modPoShLog = "PoShLog"
 $chkPoShLog = Get-Module -Name $modPoShLog
