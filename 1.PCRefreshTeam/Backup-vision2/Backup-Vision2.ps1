@@ -5,8 +5,7 @@ $usrLoggedon = Get-Process -IncludeUserName | Select-Object -Property username -
 $usrString = $usrLoggedon.UserName.Replace("WSSUMITS\","")
 
 # Install Nuget Provider, if not already installed
-Install-PackageProvider -Name "NuGet" -ForceBootstrap
-
+Install-PackageProvider -Name "NuGet" -Force
 # Set PSGallery as a trusted repository
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
@@ -74,3 +73,5 @@ try {
     Write-ErrorLog -Logger $Log -Level Error -Message $_.Exception.Message
     Close-Logger
 }
+
+Close-Logger
