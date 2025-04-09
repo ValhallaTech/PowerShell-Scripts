@@ -1,4 +1,27 @@
 # User BackerUpper 4.0.0
+# Backup-Vision2.ps1
+
+<#
+.SYNOPSIS
+    This script uses the RobocopyPS module to wrap Robocopy in a PowerShell cmdlet. It quickly backs up the user folders of the logged on user to the vision file server.
+
+.DESCRIPTION
+    This script will:
+        1. Pull the name of the logged on user
+        2. Backup the user folders to the file server
+        3. Log everything to a log file
+
+.NOTES
+    File Name: Backup-Vision2.ps1
+    Version: 4.0.0
+    Author: Fred Smith III
+    Prerequisite: PowerShell v5
+    Copyright 2023: Valhalla Tech
+
+.EXAMPLE
+    This example shows how to run the script:
+    .\Backup-Vision2.ps1
+#>
 
 # Get the username of the logged-on user
 $usrLoggedon = Get-Process -IncludeUserName | Select-Object -Property username -Unique | Where-Object { $_ -match "WSSUMITS" }
