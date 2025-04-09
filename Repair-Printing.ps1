@@ -17,23 +17,12 @@ Prerequisite   : PowerShell V2
 Copyright 2023: Valhalla Tech
 
 .EXAMPLE
+This example shows how to run the script:
 .\ClearPrintQueue.ps1
-
-This example shows how to run the script.
-
 #>
 
-# Stop the Print Spooler service
-Stop-Service -Name Spooler -Force
-
-# Empty the directory C:\Windows\System32\spool\printers
-Get-ChildItem "C:\Windows\System32\spool\printers\*" -File | Remove-Item -Force
-
-# Restart the Print Spooler service
-Start-Service -Name Spooler
-
-
 # General Variables
+# Print queue folder with wildcard
 $queueFolder = "C:\Windows\System32\spool\printers\*"
 
 # Stop the Print Spooler service
