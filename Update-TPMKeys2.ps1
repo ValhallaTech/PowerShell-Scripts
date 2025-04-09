@@ -1,3 +1,30 @@
+# Update-TPMKeys2.ps1
+
+<#
+.SYNOPSIS
+    This script is useful for fixing errors between BitLocker and SecureBoot; particularly, if BitLocker gets activated while SecureBoot is disabled. This can cause issues with functions that need to disable BitLocker, like BIOS updates, causing the system to prompt for a BitLocker key.
+
+.DESCRIPTION
+    This script will:
+    1. Delete the BitLocker key protector on the system drive
+    2. Establish 7,11 as the key protector, which is the correct protector for BitLocker working in conjunction with SecureBoot
+    3. Log everything to a log file using PoShLog
+
+.NOTES
+    File Name      : Repair-Printing.ps1
+    Author         : Fred Smith III
+    Prerequisite   : PowerShell V2
+    Copyright 2023: Valhalla Tech
+
+    Additional notes:
+    Make sure SecureBoot is enabled when running this script or it will revert back to incorrect key protectors.
+    Edit-BIOSConfig.ps1 is a part of this repository and will enable SecureBoot without having to boot into UEFI settings.
+
+.EXAMPLE
+    This example shows how to run the script:
+    .\ClearPrintQueue.ps1
+#>
+
 # Check if PoShLog module is installed and if not install the current version
 $modPoShLog = "PoShLog"
 $chkPoShLog = Get-InstalledModule -Name $modPoShLog -ErrorAction SilentlyContinue
