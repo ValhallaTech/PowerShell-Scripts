@@ -1,9 +1,11 @@
+# Remove-UserProfiles.ps1
+
 <#
 .SYNOPSIS
     Deletes user profiles on a computer, excluding specified accounts.
 
 .DESCRIPTION
-    This script deletes all user profiles on a computer except those listed in the $acctsExcluded variable. 
+    This script deletes all user profiles on a computer except those listed in the $acctsExcluded variable.
     It checks if the WinRM service is running and configures it if necessary.
 
 .EXAMPLE
@@ -21,6 +23,7 @@
     A function that will check if the WinRM service is running and if it is not, it will configure and start the service. This service is required for the script to work.
 
     Additional notes:
+    WARNING: Be aware that this is a very powerful and destructive script. It will delete all user profiles and everything saved under it locally. Do not run it unless you know what you're doing.
     Make sure you run the script in an elevated PowerShell session.
 #>
 
