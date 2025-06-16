@@ -55,6 +55,7 @@ try {
 }
 
 Write-InfoLog "PSParallel module imported"
+[OutputType([PSCustomObject])]
 function Get-InstalledSoftware {
     <#
     .SYNOPSIS
@@ -63,14 +64,17 @@ function Get-InstalledSoftware {
         This function scans the registry to find the GUID of software installed on the computer.
     .EXAMPLE
         Get-InstalledSoftware
-
         This example retrieves all software installed on the local computer
     .PARAMETER name
-        The software title you'd like to limit the query to.
+    The software title you'd like to limit the query to. 
+    Accepts partial matches, e.g. 'Microsoft'.
+    .EXAMPLE
+    Get-InstalledSoftware -name "Microsoft"
+    Retrieves all installed software with names like "Microsoft*"
     .AUTHOR
         Fred Smith III
     .VERSION
-        1.0.0
+        1.1.0
     #>
     [OutputType([System.Management.Automation.PSObject])]
     [CmdletBinding()]
@@ -81,13 +85,14 @@ function Get-InstalledSoftware {
     )
     $uninstallKeys = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
     $null = New-PSDrive -Name HKU -PSProvider Registry -Root Registry::HKEY_USERS
-    $uninstallKeys += Get-ChildItem HKU: -ErrorAction SilentlyContinue | Where-Object { $_.name -match 'S-\d-\d+-(\d+-){1,14}\d+$' } | ForEach-Object { "HKU:\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall" }
+    $uninstallKeys += Get-ChildItem HKU: -ErrorAction SilentlyContinue | 
+        Where-Object { $_.name -match 'S-\d-\d+-(\d+-){1,14}\d+$' } | 
+        ForEach-Object { "HKU:\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall" }
 
     if (-not $uninstallKeys) {
         Write-InfoLog -Message 'No software registry keys found'
     } else {
         $results = $uninstallKeys | Invoke-Parallel -ThrottleLimit 16 -ScriptBlock {
-            #param($name)
             $uninstallKey = $_
             $name = $args[0]
             if ($name) {
