@@ -12,7 +12,7 @@
     .\Remove-UserProfiles.ps1
 
 .NOTES
-    Version: 1.2.4
+    Version: 1.3.0
     Author: Fred Smith
     Creation Date: 04/10/2023
 
