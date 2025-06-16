@@ -55,7 +55,6 @@ try {
 }
 
 Write-InfoLog "PSParallel module imported"
-[OutputType([PSCustomObject])]
 function Get-InstalledSoftware {
     <#
     .SYNOPSIS
