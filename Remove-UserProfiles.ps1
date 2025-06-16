@@ -88,6 +88,8 @@ function Invoke-WinRM {
             Write-InfoLog "WinRM has been configured successfully."
         } catch {
             Write-ErrorLog "An error occurred while configuring WinRM: $_"
+            Close-Logger
+            exit 1
         }
     } else {
         Write-InfoLog "WinRM service is running."
