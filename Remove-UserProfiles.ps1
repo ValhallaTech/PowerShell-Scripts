@@ -60,6 +60,22 @@ $logger |
 
 Write-InfoLog "PoShLog module imported and logger configured"
 
+# Check to see if the user is running an elevated instance. Log success or failure. Exit if not elevated or the check fails.
+try {
+    $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+    if ($isAdmin) {
+        Write-InfoLog "Administrative privileges confirmed. Script running as administrator."
+    } else {
+        Write-ErrorLog "Script must be run as an administrator. Exiting script."
+        Close-Logger
+        exit 1
+    }
+} catch {
+    Write-ErrorLog "Failed to check administrative privileges: $_"
+    Close-Logger
+    exit 1
+}
+
 # Function to check if WinRM service is running and configured
 function Invoke-WinRM {
     Write-InfoLog "Checking if WinRM service is running and configured"
