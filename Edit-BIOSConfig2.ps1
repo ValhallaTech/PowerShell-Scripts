@@ -18,7 +18,7 @@
 [CmdletBinding()]
 param (
     [string]$logDirectory = "$env:SystemDrive\Logs",
-    [string]$logFileName = "Edit-BIOSConfig.log"
+    [string]$logFileName = 'Edit-BIOSConfig.log'
 )
 
 function Import-RequiredModule {
@@ -33,7 +33,7 @@ function Import-RequiredModule {
 
 function Install-NugetProvider {
     if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
-        Install-PackageProvider -Name "NuGet" -Force
+        Install-PackageProvider -Name 'NuGet' -Force
     }
 }
 
@@ -84,20 +84,20 @@ function Test-SecureBootEnabled {
 
 # Ensure script is running as administrator
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Error "Script must be run as an administrator."
+    Write-Error 'Script must be run as an administrator.'
     exit 1
 }
 
 Install-NugetProvider
 Set-PsGalleryTrusted
-Import-RequiredModule -moduleName "PoShLog"
+Import-RequiredModule -moduleName 'PoShLog'
 
 # Prepare logging
 $logFilePath = Join-Path $logDirectory $logFileName
 $logger = New-Logger
 $logger | Set-MinimumLevel -Value Information | Add-SinkFile -Path $logFilePath | Add-SinkConsole | Start-Logger
 
-Write-InfoLog "Logger initialized."
+Write-InfoLog 'Logger initialized'
 
 try {
     $pathLaptopBiosExe = "$env:systemDrive\Tanium_Software\BIOSConf-Laptop_x64"
@@ -108,9 +108,9 @@ try {
 
     Write-InfoLog "This machine is a $chassisType."
     if ($secureBootEnabled) {
-        Write-InfoLog "BIOS Configuration: Secure boot is on."
+        Write-InfoLog 'BIOS Configuration: Secure boot is on.'
     } else {
-        Write-InfoLog "BIOS Configuration: Secure boot is off."
+        Write-InfoLog 'BIOS Configuration: Secure boot is off.'
     }
 
     if ($chassisType -eq 'Laptop' -and -not $secureBootEnabled) {
@@ -120,7 +120,7 @@ try {
         Write-InfoLog "Running: $pathDesktopBiosExe"
         Start-Process -FilePath $pathDesktopBiosExe -Wait
     } else {
-        Write-InfoLog "No BIOS configuration change required."
+        Write-InfoLog 'No BIOS configuration change required.'
     }
 }
 catch {
