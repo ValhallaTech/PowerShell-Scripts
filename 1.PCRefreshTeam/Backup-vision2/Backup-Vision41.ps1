@@ -10,7 +10,7 @@
 
 .NOTES
     File Name: Backup-Vision2.ps1
-    Version: 4.1.0
+    Version: 4.2.0
     Author: Fred Smith III
     Prerequisite: PowerShell v5
     Copyright 2023: Valhalla Tech
@@ -37,7 +37,15 @@ $userName = $activeSession.Split('\')[-1]
 $sourcePath = "$env:SystemDrive\Users\$userName"
 $destinationPath = "\\vision2\backups\$userName"
 
-$logFilePath = Join-Path $logDirectory "Backup-Vision2.log"
+# Ensure NuGet provider is installed for unattended usage
+if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
+    Install-PackageProvider -Name "NuGet" -Force
+}
+# Ensure PSGallery is trusted for unattended usage
+$psGallery = Get-PSRepository -Name PSGallery
+if ($psGallery.InstallationPolicy -ne 'Trusted') {
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+}
 
 function Import-RequiredModule {
     param (
@@ -54,6 +62,7 @@ Import-RequiredModule -moduleName "PoShLog"
 Import-RequiredModule -moduleName "RobocopyPS"
 
 # Configure logger
+$logFilePath = Join-Path $logDirectory "Backup-Vision41.log"
 $logger = New-Logger
 $logger | Set-MinimumLevel -Value Information | Add-SinkFile -Path $logFilePath | Add-SinkConsole | Start-Logger
 
