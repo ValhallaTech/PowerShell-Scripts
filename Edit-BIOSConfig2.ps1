@@ -48,6 +48,8 @@ function Get-ChassisType {
     <#
     .SYNOPSIS
         Returns 'Laptop' or 'Desktop' based on chassis type.
+    .NOTES
+        Chassis types: 9 (Laptop), 10 (Notebook), 14 (SubNotebook)
     #>
     $laptopTypes = @(9, 10, 14)
     try {
