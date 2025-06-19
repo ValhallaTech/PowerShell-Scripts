@@ -8,7 +8,7 @@
 
 .NOTES
     File Name: Update-TPMKeys20.ps1
-    Version: 2.0.0
+    Version: 2.0.1
     Prerequisite: Requires PowerShell 5.1 or later.
     Author: Fred Smith III
     Copyright 2023: Valhalla Tech
@@ -82,6 +82,12 @@ function Add-TpmProtSB {
 }
 
 # --- Main Script ---
+
+# Checking to make sure script is being run in an elevated session
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-ErrorLog "Script must be run as an administrator."
+    exit 1
+}
 
 Install-NuGet
 Set-PSGallery
