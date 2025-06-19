@@ -8,7 +8,7 @@
 
 .NOTES
     File Name: Update-TPMKeys20.ps1
-    Version: 2.0
+    Version: 2.0.0
     Prerequisite: Requires PowerShell 5.1 or later.
     Author: Fred Smith III
     Copyright 2023: Valhalla Tech
